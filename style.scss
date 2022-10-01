@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Raleway:ital,wght@0,100;1,100&display=swap");
+
+// VARIABLES
+
+$raleway: "Raleway", sans-serif;
+$lora: "Lora", serif;
+
+$beige: #ffffed;
+$light-green: #9ff294;
+$green: #75b36d;
+$dark-green: #4b7346;
+
+$lg: 2rem;
+$md: 1.5rem;
+$sm: 1.2rem;
+$xsm: 0.875rem;
+
+$font-sizes: (
+  h1: $lg,
+  h2: $md,
+  h3: $sm,
+  p: $xsm,
+);
+
+$glg: 1rem;
+$gmd: 0.5rem;
+$gsm: 0.25rem;
+
+$pages: ("about", "services", "contact");
+
+$t: 0.3s;
+
+// MIXINS
+
+// GLOBALS
+
+.lora {
+  font-family: $lora;
+  font-weight: 400;
+
+  &.thick {
+    font-weight: 600;
+  }
+}
+
+a {
+  font-family: $lora;
+  font-weight: 600;
+  color: black;
+  text-decoration: none;
+  opacity: 0.5;
+  transition: opacity $t;
+
+  &.is--active,
+  &:hover {
+    opacity: 1;
+    text-decoration: line-through;
+  }
+}
+
+@each $e, $s in $font-sizes {
+  #{$e} {
+    font-size: $s;
+    margin: 0;
+    font-weight: 100;
+    font-weight: 400;
+  }
+}
+
+// STYLING
+
+html,
+body {
+  margin: 0;
+  font-family: $raleway;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+#gradient-canvas {
+  z-index: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  --gradient-color-1: #ffffed;
+  --gradient-color-2: #ffffed;
+  --gradient-color-3: #9ff294;
+  --gradient-color-4: #75b36d;
+  // transform: scale(1.5);
+  // top: -25%;
+  // left: -25%;
+}
+
+nav {
+  position: absolute;
+  right: 0;
+  margin: ($glg * 2) $glg $glg;
+
+  a {
+    margin-left: $gmd;
+  }
+}
+
+.signature {
+  width: 30vw;
+  z-index: 100;
+  margin: $glg;
+  position: absolute;
+  top: 50%;
+  transform: translate(0%, -50%);
+
+  .signature-top {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px black;
+
+    img {
+      width: 15%;
+      margin-left: $glg;
+    }
+  }
+
+  h1 {
+    $size: 3vw;
+    font-size: $size;
+    line-height: $size;
+  }
+
+  p {
+    $size: 1.2vw;
+    font-size: $size;
+    line-height: $size;
+    width: 30vw;
+    margin-top: 0.5vw;
+  }
+}
+
+article {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0%, -50%);
+  max-width: 50%;
+  z-index: 100;
+  margin: $glg;
+  text-align: right;
+
+  main {
+    opacity: 0;
+    max-height: 0;
+    transition: opacity $t, max-height 0s $t;
+
+    &.services {
+      h1 {
+        margin-bottom: $gsm;
+      }
+      h3 {
+        margin-bottom: $glg;
+      }
+    }
+  }
+
+  @each $page in $pages {
+    &.#{$page} {
+      .#{$page} {
+        opacity: 1;
+        max-height: 100vh;
+        transition: opacity $t $t, max-height 0s $t;
+      }
+    }
+  }
+}
