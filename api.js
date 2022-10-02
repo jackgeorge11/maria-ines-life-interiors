@@ -3,15 +3,79 @@ class API {
     this.accessToken = accessToken;
     this.spaceID = spaceID;
     this.environment_id = "master";
-    // this.baseURI = "https://graphql.contentful.com/content/v1";
+    this.endpoint = `https://graphql.contentful.com/content/v1/spaces/${this.spaceID}`;
   }
 
-  async getSignature(el) {
-    console.log("signature");
+  getFetchOptions(query) {
+    return {
+      spaceID: this.spaceID,
+      accessToken: this.accessToken,
+      endpoint: this.endpoint,
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query }),
+    };
+  }
+
+  async getBlurb(el) {
+    const query = `
+      {
+        blurbCollection {
+          items {
+            sys {
+              firstPublishedAt
+            }
+            blurb
+          }
+        }
+      }
+    `;
+
+    fetch(this.endpoint, this.getFetchOptions(query))
+      .then((res) => res.json())
+      .then(({ data }) => {
+        if (data?.blurbCollection?.items) {
+          data.blurbCollection.items.forEach((i) => {
+            const blurb = document.createElement("p");
+            const blurbText = document.createTextNode(i.blurb);
+            blurb.appendChild(blurbText);
+            el.appendChild(blurb);
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   async getAbout(el) {
-    console.log("signature");
+    const query = `
+      {
+        aboutCollection {
+          items {
+            sys {
+              firstPublishedAt
+            }
+            description
+          }
+        }
+      }
+    `;
+
+    fetch(this.endpoint, this.getFetchOptions(query))
+      .then((res) => res.json())
+      .then(({ data }) => {
+        if (data?.aboutCollection?.items) {
+          data.aboutCollection.items.forEach((i) => {
+            const about = document.createElement("h1");
+            const aboutText = document.createTextNode(i.description);
+            about.appendChild(aboutText);
+            el.appendChild(about);
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   async getServices(el) {
@@ -29,30 +93,17 @@ class API {
       }
     `;
 
-    const fetchOptions = {
-      spaceID: this.spaceID,
-      accessToken: this.accessToken,
-      endpoint: `https://graphql.contentful.com/content/v1/spaces/${this.spaceID}`,
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query }),
-    };
-
-    fetch(fetchOptions.endpoint, fetchOptions)
+    fetch(this.endpoint, this.getFetchOptions(query))
       .then((res) => res.json())
       .then(({ data }) => {
-        console.log(data?.servicesCollection?.items);
         if (data?.servicesCollection?.items) {
           data.servicesCollection.items.forEach((i) => {
             const title = document.createElement("h1");
-            const textTitle = document.createTextNode(i.title);
-            title.appendChild(textTitle);
+            const titleText = document.createTextNode(i.title);
+            title.appendChild(titleText);
             const description = document.createElement("h3");
-            const textDescription = document.createTextNode(i.description);
-            description.appendChild(textDescription);
+            const descriptionText = document.createTextNode(i.description);
+            description.appendChild(descriptionText);
             el.appendChild(title);
             el.appendChild(description);
           });

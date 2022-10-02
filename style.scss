@@ -59,7 +59,8 @@ a {
 }
 
 @each $e, $s in $font-sizes {
-  #{$e} {
+  #{$e},
+  .#{$e} {
     font-size: $s;
     margin: 0;
     font-weight: 100;
@@ -137,7 +138,7 @@ nav {
   }
 }
 
-article {
+main {
   position: absolute;
   top: 50%;
   right: 0;
@@ -147,10 +148,9 @@ article {
   margin: $glg;
   text-align: right;
 
-  main {
+  article {
     opacity: 0;
-    max-height: 0;
-    transition: opacity $t, max-height 0s $t;
+    transition: opacity $t;
 
     &.services {
       h1 {
@@ -160,14 +160,16 @@ article {
         margin-bottom: $glg;
       }
     }
-  }
 
-  @each $page in $pages {
-    &.#{$page} {
-      .#{$page} {
-        opacity: 1;
-        max-height: 100vh;
-        transition: opacity $t $t, max-height 0s $t;
+    &.contact {
+      h1 {
+        margin-bottom: $glg;
+      }
+
+      h3 {
+        cursor: pointer;
+        text-decoration: underline;
+        transition: opacity $t;
       }
     }
   }
