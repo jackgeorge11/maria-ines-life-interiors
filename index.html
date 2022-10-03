@@ -4,14 +4,96 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Maria Ines Life Interiors</title>
+    <meta
+      name="description"
+      content="Interior design at the intersection between science, spirituality and everyday working and living spaces."
+    />
+    <meta property="og:title" content="Maria Ines Life Interiors" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mariaineslifeinteriors.com/" />
+    <meta property="og:image" content="/images/og-image.png" />
+    <link rel="shortcut icon" href="/favicons/favicon.ico" />
+    <link rel="icon" sizes="16x16 32x32 64x64" href="/favicons/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="196x196"
+      href="/images/favicon-192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="160x160"
+      href="/images/favicon-160.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/images/favicon-96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="64x64"
+      href="/images/favicon-64.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/images/favicon-32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/images/favicon-16.png"
+    />
+    <link rel="apple-touch-icon" href="/images/favicon-57.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/images/favicon-114.png"
+    />
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon-72.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="/images/favicon-144.png"
+    />
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon-60.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/images/favicon-120.png"
+    />
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon-76.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/images/favicon-152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/images/favicon-180.png"
+    />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="/images/favicon-144.png" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+
     <link rel="stylesheet" href="./style.scss" />
   </head>
   <body>
     <canvas id="gradient-canvas" data-transition-in></canvas>
+    <a href="/about" class="trans-link image-link">
+      <img src="./logo.png" alt="" class="header-logo" id="about"
+    /></a>
     <nav>
-      <a href="/" id="about" class="false-link">about</a>
-      <a href="/services" id="services" class="false-link">services</a>
-      <a href="/contact" id="contact" class="false-link">contact</a>
+      <a href="/" id="about" class="nav-link trans-link">about</a>
+      <a href="/services" id="services" class="nav-link trans-link">services</a>
+      <a href="/contact" id="contact" class="nav-link trans-link">contact</a>
     </nav>
     <div class="signature">
       <div class="signature-top">
@@ -19,11 +101,15 @@
           <h1 class="lora">Maria Ines</h1>
           <h1 class="lora">Life Interiors</h1>
         </div>
-        <img src="./logo.png" alt="" />
+        <a href="/about" class="trans-link image-link">
+          <img src="./logo.png" alt="" id="about"
+        /></a>
       </div>
     </div>
     <main>
-      <article class="about"></article>
+      <article class="about">
+        <h1 class="resp-title">Maria Ines Life Interiors</h1>
+      </article>
       <article class="services"></article>
       <article class="contact">
         <h1>For inquiries, contact me via phone or email.</h1>
@@ -32,6 +118,12 @@
         </h3>
       </article>
     </main>
+    <div class="loading-screen">
+      <h2>
+        <span>W</span><span>e</span><span>l</span><span>c</span><span>o</span
+        ><span>m</span><span>e</span>
+      </h2>
+    </div>
     <script type="module" src="/main.js"></script>
     <script type="module" src="/api.js"></script>
   </body>

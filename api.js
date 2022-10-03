@@ -20,7 +20,7 @@ class API {
     };
   }
 
-  async getBlurb(el) {
+  async getBlurb(els) {
     const query = `
       {
         blurbCollection {
@@ -39,10 +39,12 @@ class API {
       .then(({ data }) => {
         if (data?.blurbCollection?.items) {
           data.blurbCollection.items.forEach((i) => {
-            const blurb = document.createElement("p");
-            const blurbText = document.createTextNode(i.blurb);
-            blurb.appendChild(blurbText);
-            el.appendChild(blurb);
+            els.forEach((e) => {
+              const blurb = document.createElement("p");
+              const blurbText = document.createTextNode(i.blurb);
+              blurb.appendChild(blurbText);
+              e.appendChild(blurb);
+            });
           });
         }
       })
@@ -62,7 +64,6 @@ class API {
         }
       }
     `;
-
     fetch(this.endpoint, this.getFetchOptions(query))
       .then((res) => res.json())
       .then(({ data }) => {
@@ -110,6 +111,15 @@ class API {
         }
       })
       .catch((err) => console.log(err));
+  }
+
+  getAllData() {
+    this.getBlurb([
+      document.querySelector(".signature"),
+      document.querySelector("article.about"),
+    ]);
+    this.getAbout(document.querySelector("article.about"));
+    this.getServices(document.querySelector("article.services"));
   }
 }
 

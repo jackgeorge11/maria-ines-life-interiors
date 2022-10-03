@@ -7,43 +7,51 @@ const gradient = new Gradient();
 // Call `initGradient` with the selector to your canvas
 gradient.initGradient("#gradient-canvas");
 
+// sleep function for css transition delays
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // Link related stuff
 
-let pageState;
+let pageState = "about";
 const $main = document.querySelector("main");
+const $loadingScreen = document.querySelector(".loading-screen");
 const $about = document.querySelector("article.about");
 const $services = document.querySelector("article.services");
 const $contact = document.querySelector("article.contact");
 const pages = [$about, $services, $contact];
 let $nav = {};
 
-window.onload = () => {
-  document.querySelectorAll(".false-link").forEach((a) => {
+const linkClick = (e) => {
+  e.preventDefault();
+  const toward = e.target.id;
+  if (pageState !== toward) {
+    pageState = toward;
+    window.history.pushState("", "", pageState === "about" ? "/" : pageState);
+    handleTransition(pageState);
+  }
+};
+
+window.onload = async () => {
+  document.querySelectorAll(".nav-link").forEach((a) => {
     $nav[a.id] = a;
-    a.addEventListener("click", (e) => {
-      e.preventDefault();
-      const toward = e.target.id;
-      if (pageState !== toward) {
-        pageState = toward;
-        window.history.pushState(
-          "",
-          "",
-          pageState === "about" ? "/" : pageState
-        );
-        handleTransition(pageState);
-      }
-    });
   });
   pageState = window.location.pathname.substring(
     1,
     window.location.pathname.length
   );
+  Contentful.getAllData();
   handleTransition(pageState ? pageState : "about");
+  await sleep(1000);
+  $loadingScreen.classList.add("fade-out");
+  await sleep(600);
+  $loadingScreen.style.display = "none";
 };
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+document.querySelectorAll(".trans-link").forEach((e) => {
+  e.addEventListener("click", (e) => linkClick(e));
+});
 
 const handleTransition = (p) => {
   Object.keys($nav).forEach((a) => {
@@ -67,10 +75,6 @@ const handleTransition = (p) => {
   });
 };
 
-Contentful.getBlurb(document.querySelector(".signature"));
-Contentful.getAbout(document.querySelector("article.about"));
-Contentful.getServices(document.querySelector("article.services"));
-
 const $revealInfo = document.querySelector("h3.reveal");
 
 $revealInfo.addEventListener("click", async (e) => {
@@ -84,8 +88,10 @@ $revealInfo.addEventListener("click", async (e) => {
   const $email = document.createElement("a");
   $email.textContent = "mariaines@icloud.com";
   $email.href = "mailto:mariaines@icloud.com";
+  const $spacer = document.createElement("span");
+  $spacer.className = "spacer";
   $revealInfo.appendChild($phone);
-  $revealInfo.appendChild(document.createElement("br"));
+  $revealInfo.appendChild($spacer);
   $revealInfo.appendChild($email);
   $revealInfo.style.opacity = 1;
 });
