@@ -88,6 +88,7 @@ class API {
               firstPublishedAt
             }
             title
+            cost
             description
           }
         }
@@ -102,6 +103,11 @@ class API {
             const title = document.createElement("h1");
             const titleText = document.createTextNode(i.title);
             title.appendChild(titleText);
+            const cost = document.createElement("span");
+            const costText = document.createTextNode(i.cost);
+            cost.appendChild(costText);
+            cost.className = "lora";
+            title.appendChild(cost);
             const description = document.createElement("h3");
             const descriptionText = document.createTextNode(i.description);
             description.appendChild(descriptionText);

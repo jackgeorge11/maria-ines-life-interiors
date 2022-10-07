@@ -96,6 +96,11 @@ body {
   overflow: hidden;
 }
 
+body {
+  display: flex;
+  align-items: center;
+}
+
 #gradient-canvas {
   z-index: 0;
   position: absolute;
@@ -154,6 +159,7 @@ body {
 
 nav {
   position: absolute;
+  top: 0;
   right: 0;
   margin: ($glg * 2) $glg $glg;
 
@@ -177,7 +183,7 @@ nav {
 
 .signature {
   width: 30vw;
-  z-index: 100;
+  z-index: 1;
   margin: $glg;
   position: absolute;
   top: 50%;
@@ -217,14 +223,22 @@ nav {
 }
 
 main {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translate(0%, -50%);
-  max-width: 50%;
-  z-index: 100;
-  margin: $glg;
+  position: sticky;
+  $nav-size: $glg * 3 + $md;
+  top: $nav-size;
+  // right: 0;
+  // transform: translate(0%, -50%);
+  // min-height: calc(100vh - $nav-size);
+  max-height: calc(100vh - $nav-size);
+  z-index: 1;
   text-align: right;
+  display: flex;
+  // align-items: center;
+  justify-content: end;
+  width: 100%;
+  z-index: 2;
+  overflow-y: auto;
+
   @include resp {
     max-width: 100%;
     text-align: left;
@@ -235,8 +249,16 @@ main {
   article {
     opacity: 0;
     transition: opacity $t;
-    max-height: 80vh;
-    overflow-y: scroll;
+    // max-height: 80vh;
+    // overflow-y: scroll;
+    max-width: 50%;
+    margin: $glg;
+    height: fit-content !important;
+
+    @include resp {
+      max-width: 100%;
+      padding-bottom: $nav-size - $glg;
+    }
 
     &.about {
       .resp-title {
@@ -262,6 +284,16 @@ main {
     &.services {
       h1 {
         margin-bottom: $gsm;
+
+        span {
+          margin-left: $gmd;
+          $font-size: $xsm;
+          font-size: $font-size;
+
+          @include resp {
+            font-size: $font-size * 0.85;
+          }
+        }
       }
       h3 {
         margin-bottom: $glg;
