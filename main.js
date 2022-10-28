@@ -49,11 +49,18 @@ window.onload = async () => {
   $loadingScreen.style.display = "none";
 };
 
+window.onpopstate = (e) => {
+  console.log("popped");
+  const page = e.target.window.location.pathname.replace("/", "");
+  handleTransition(page ? page : "about");
+};
+
 document.querySelectorAll(".trans-link").forEach((e) => {
   e.addEventListener("click", (e) => linkClick(e));
 });
 
 const handleTransition = (p) => {
+  console.log(p);
   Object.keys($nav).forEach((a) => {
     a === p
       ? $nav[a].classList?.add("is--active")
@@ -82,16 +89,16 @@ $revealInfo.addEventListener("click", async (e) => {
   $revealInfo.style.opacity = 0;
   await sleep(300);
   $revealInfo.textContent = "";
-  // const $phone = document.createElement("a");
-  // $phone.textContent = "+1 (310) 866-2453";
-  // $phone.href = "tel:+1 (310) 866-2453";
+  const $phone = document.createElement("a");
+  $phone.textContent = "+44 7740 644404 (WhatsApp)";
+  $phone.href = "https://wa.me/447740644404";
   const $email = document.createElement("a");
   $email.textContent = "ines@mariaineslifeinteriors.com";
   $email.href = "mailto:ines@mariaineslifeinteriors.com";
-  // const $spacer = document.createElement("span");
-  // $spacer.className = "spacer";
-  // $revealInfo.appendChild($phone);
-  // $revealInfo.appendChild($spacer);
+  const $spacer = document.createElement("span");
+  $spacer.className = "spacer";
+  $revealInfo.appendChild($phone);
+  $revealInfo.appendChild($spacer);
   $revealInfo.appendChild($email);
   $revealInfo.style.opacity = 1;
 });

@@ -261,6 +261,11 @@ main {
     }
 
     &.about {
+      h3 {
+        margin-bottom: $gsm;
+        text-align: end;
+      }
+
       .resp-title {
         display: none;
         font-family: $lora;
@@ -279,11 +284,21 @@ main {
           display: block;
         }
       }
+
+      img {
+        max-width: 10rem;
+        max-height: 10rem;
+        width: 10rem;
+        height: 10rem;
+        border-radius: 50%;
+        margin-bottom: $gsm;
+      }
     }
 
     &.services {
       h1 {
-        margin-bottom: $gsm;
+        margin-bottom: $gmd;
+        line-height: $md;
 
         span {
           margin-left: $gmd;

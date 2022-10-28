@@ -39,7 +39,7 @@ class API {
       .then(({ data }) => {
         if (data?.blurbCollection?.items) {
           data.blurbCollection.items.forEach((i) => {
-            els.forEach((e) => {
+            els.forEach((e, j) => {
               const blurb = document.createElement("p");
               const blurbText = document.createTextNode(i.blurb);
               blurb.appendChild(blurbText);
@@ -60,6 +60,9 @@ class API {
               firstPublishedAt
             }
             description
+            image {
+              url
+            }
           }
         }
       }
@@ -67,12 +70,20 @@ class API {
     fetch(this.endpoint, this.getFetchOptions(query))
       .then((res) => res.json())
       .then(({ data }) => {
-        if (data?.aboutCollection?.items) {
-          data.aboutCollection.items.forEach((i) => {
-            const about = document.createElement("h1");
-            const aboutText = document.createTextNode(i.description);
-            about.appendChild(aboutText);
-            el.appendChild(about);
+        const items = data.aboutCollection.items;
+        if (items) {
+          const img = document.createElement("img");
+          img.src = items[0].image.url;
+          el.appendChild(img);
+          items[0].description.split("\n").forEach((p, i) => {
+            if (p) {
+              const about = document.createElement("h3");
+              const aboutText = document.createTextNode(p);
+              about.appendChild(aboutText);
+              el.appendChild(about);
+            } else {
+              el.appendChild(document.createElement("br"));
+            }
           });
         }
       })
@@ -84,12 +95,10 @@ class API {
       {
         servicesCollection {
           items {
-            sys {
-              firstPublishedAt
-            }
             title
             cost
             description
+            order
           }
         }
       }
@@ -99,15 +108,20 @@ class API {
       .then((res) => res.json())
       .then(({ data }) => {
         if (data?.servicesCollection?.items) {
-          data.servicesCollection.items.forEach((i) => {
+          const services = data.servicesCollection.items.sort(
+            (a, b) => a.order - b.order
+          );
+          services.forEach((i) => {
             const title = document.createElement("h1");
             const titleText = document.createTextNode(i.title);
             title.appendChild(titleText);
-            const cost = document.createElement("span");
-            const costText = document.createTextNode(i.cost);
-            cost.appendChild(costText);
-            cost.className = "lora";
-            title.appendChild(cost);
+            if (i.cost) {
+              const cost = document.createElement("span");
+              const costText = document.createTextNode(i.cost);
+              cost.appendChild(costText);
+              cost.className = "lora";
+              title.appendChild(cost);
+            }
             const description = document.createElement("h3");
             const descriptionText = document.createTextNode(i.description);
             description.appendChild(descriptionText);
