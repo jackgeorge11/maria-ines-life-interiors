@@ -133,8 +133,8 @@ class API {
       .catch((err) => console.log(err));
   }
 
-  getAllData() {
-    this.getBlurb([
+  async getAllData() {
+    await this.getBlurb([
       document.querySelector(".signature"),
       document.querySelector("article.about"),
     ]);

@@ -264,6 +264,10 @@ main {
       h3 {
         margin-bottom: $gsm;
         text-align: end;
+
+        @include resp {
+          text-align: left;
+        }
       }
 
       .resp-title {
